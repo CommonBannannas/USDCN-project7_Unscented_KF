@@ -66,6 +66,7 @@ public:
 
   ///* Sigma point spreading parameter
   double lambda_;
+  double nis_;
 
 
   /**
@@ -102,6 +103,17 @@ public:
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+private:
+  VectorXd _augmented_state(void);
+  MatrixXd _augmented_covariance(void);
+  MatrixXd _sigma_points(VectorXd x_aug, MatrixXd P_aug);
+  MatrixXd _predict_sigma_points(MatrixXd Xsig_aug, double delta_t);
+  void _predict(VectorXd *x_pred, MatrixXd *P_pred);
+  MatrixXd _measurement_sigma_points(void);
+  VectorXd _get_sigma_weights(void);
+  VectorXd _pred_measurement(MatrixXd Zsig);
+  MatrixXd _calc_measurement_cov(MatrixXd Zsig, VectorXd z_pred);
+  void _update_posterior_var(VectorXd z, VectorXd z_pred, MatrixXd S, MatrixXd Zsig);
 };
 
 #endif /* UKF_H */
