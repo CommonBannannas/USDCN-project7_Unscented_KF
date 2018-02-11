@@ -240,8 +240,8 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
 
 // Theese functions make the calculations with the components for the process
 // and keep the code clean and comprehensible;
-// taken from:
-//https://github.com/penny4860/CarND-Unscent-Kalman-Filter/blob/master/src/ukf.cpp
+// inspired and orignally taken from:
+// https://github.com/penny4860/CarND-Unscent-Kalman-Filter/blob/master/src/ukf.cpp
 
 // Calculate new Sigma Points
 MatrixXd UKF::pred_sigma_p(MatrixXd Xsig_augmented, double delta_t) {
@@ -359,7 +359,6 @@ VectorXd UKF::sigma_weights(void) {
 
 //
 VectorXd UKF::pred_meas(MatrixXd Zsig) {
-    // set weights
     VectorXd weights = sigma_weights();
     // mean predicted measurement
     VectorXd z_pred = VectorXd(3);
@@ -373,7 +372,7 @@ VectorXd UKF::pred_meas(MatrixXd Zsig) {
 MatrixXd UKF::meas_cov(MatrixXd Zsig, VectorXd z_pred) {
     VectorXd weights = sigma_weights();
 
-    // measurement covariance matrix S
+    // measurement covariance matrix
     int n_z = 3;
     MatrixXd S = MatrixXd(n_z, n_z);
     S.fill(0.0);
